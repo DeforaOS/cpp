@@ -35,7 +35,7 @@ dist:
 		$(PACKAGE)-$(VERSION)/doc/gtkdoc/tmpl/CPP-unused.sgml \
 		$(PACKAGE)-$(VERSION)/doc/gtkdoc/tmpl/cpp.sgml \
 		$(PACKAGE)-$(VERSION)/doc/gtkdoc/tmpl/project.conf \
-		$(PACKAGE)-$(VERSION)/include/cpp.h \
+		$(PACKAGE)-$(VERSION)/include/CPP.h \
 		$(PACKAGE)-$(VERSION)/include/Makefile \
 		$(PACKAGE)-$(VERSION)/include/project.conf \
 		$(PACKAGE)-$(VERSION)/src/cpp.c \

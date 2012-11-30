@@ -18,7 +18,7 @@
 #ifndef _CPP_PARSER_H
 # define _CPP_PARSER_H
 
-# include "cpp.h"
+# include "CPP.h"
 
 
 /* types */

@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
-#include "cpp.h"
+#include "CPP.h"
 #include "../config.h"
 
 

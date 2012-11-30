@@ -13,6 +13,7 @@ AR	?= ar
 RANLIB	?= ranlib
 CCSHARED?= $(CC) -shared
 BINDIR	= $(PREFIX)/bin
+SBINDIR	= $(PREFIX)/sbin
 RM	?= rm -f
 LN	?= ln -f
 MKDIR	?= mkdir -p
@@ -41,16 +42,16 @@ cpp_LDFLAGS = $(LDFLAGSF) $(LDFLAGS) -L. -L$(LIBDIR) -Wl,-rpath,$(LIBDIR) -lcpp
 cpp: $(cpp_OBJS) libcpp.so
 	$(CC) -o cpp $(cpp_OBJS) $(cpp_LDFLAGS)
 
-cpp.o: cpp.c common.h ../include/cpp.h
+cpp.o: cpp.c common.h ../include/CPP.h
 	$(CC) $(libcpp_CFLAGS) -c cpp.c
 
-parser.o: parser.c parser.h ../include/cpp.h
+parser.o: parser.c parser.h ../include/CPP.h
 	$(CC) $(libcpp_CFLAGS) -c parser.c
 
-scanner.o: scanner.c common.h ../include/cpp.h
+scanner.o: scanner.c common.h ../include/CPP.h
 	$(CC) $(libcpp_CFLAGS) -c scanner.c
 
-main.o: main.c ../include/cpp.h ../config.h
+main.o: main.c ../include/CPP.h ../config.h
 	$(CC) $(cpp_CFLAGS) -c main.c
 
 clean:
