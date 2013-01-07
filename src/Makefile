@@ -2,22 +2,22 @@ TARGETS	= libcpp.a libcpp.so.0.0 libcpp.so.0 libcpp.so cpp
 PREFIX	= /usr/local
 DESTDIR	=
 LIBDIR	= $(PREFIX)/lib
-CC	?= cc
+CC	= cc
 CPPFLAGSF= -I ../include
 CPPFLAGS=
 CFLAGSF	= -W `pkg-config --cflags libSystem`
 CFLAGS	= -Wall -g -O2 -pedantic
 LDFLAGSF= `pkg-config --libs libSystem`
 LDFLAGS	= 
-AR	?= ar
-RANLIB	?= ranlib
-CCSHARED?= $(CC) -shared
+AR	= ar
+RANLIB	= ranlib
+CCSHARED= $(CC) -shared
 BINDIR	= $(PREFIX)/bin
 SBINDIR	= $(PREFIX)/sbin
-RM	?= rm -f
-LN	?= ln -f
-MKDIR	?= mkdir -p
-INSTALL	?= install
+RM	= rm -f
+LN	= ln -f
+MKDIR	= mkdir -p
+INSTALL	= install
 
 
 all: $(TARGETS)

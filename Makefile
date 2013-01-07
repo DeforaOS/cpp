@@ -1,9 +1,9 @@
 PACKAGE	= CPP
 VERSION	= 0.0.1
 SUBDIRS	= data doc include src
-RM	?= rm -f
-LN	?= ln -f
-TAR	?= tar -czvf
+RM	= rm -f
+LN	= ln -f
+TAR	= tar -czvf
 
 
 all: subdirs
