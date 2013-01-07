@@ -14,6 +14,7 @@ cpp.pc: cpp.pc.in ../config.sh
 
 clean:
 	$(RM) -- $(cpp.pc_OBJS)
+	./pkgconfig.sh -c -P "$(PREFIX)" -- "cpp.pc"
 
 distclean: clean
 	$(RM) -- $(TARGETS)
