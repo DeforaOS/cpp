@@ -16,7 +16,7 @@ BINDIR	= $(PREFIX)/bin
 SBINDIR	= $(PREFIX)/sbin
 RM	= rm -f
 LN	= ln -f
-MKDIR	= mkdir -p
+MKDIR	= mkdir -m 0755 -p
 INSTALL	= install
 
 
@@ -62,12 +62,12 @@ distclean: clean
 
 install: $(TARGETS)
 	$(MKDIR) $(DESTDIR)$(LIBDIR)
-	$(INSTALL) -m 0644 -- libcpp.a $(DESTDIR)$(LIBDIR)/libcpp.a
-	$(INSTALL) -m 0755 -- libcpp.so.0.0 $(DESTDIR)$(LIBDIR)/libcpp.so.0.0
+	$(INSTALL) -m 0644 libcpp.a $(DESTDIR)$(LIBDIR)/libcpp.a
+	$(INSTALL) -m 0755 libcpp.so.0.0 $(DESTDIR)$(LIBDIR)/libcpp.so.0.0
 	$(LN) -s -- libcpp.so.0.0 $(DESTDIR)$(LIBDIR)/libcpp.so.0
 	$(LN) -s -- libcpp.so.0.0 $(DESTDIR)$(LIBDIR)/libcpp.so
 	$(MKDIR) $(DESTDIR)$(BINDIR)
-	$(INSTALL) -m 0755 -- cpp $(DESTDIR)$(BINDIR)/cpp
+	$(INSTALL) -m 0755 cpp $(DESTDIR)$(BINDIR)/cpp
 
 uninstall:
 	$(RM) -- $(DESTDIR)$(LIBDIR)/libcpp.a
