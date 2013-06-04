@@ -55,5 +55,5 @@ while [ $# -gt 0 ]; do
 	output="${target%.cpp}.o"
 	shift
 
-	../src/cpp "$target" > "$output"
+	LD_LIBRARY_PATH="../src" ../src/cpp "$target" > "$output"
 done
