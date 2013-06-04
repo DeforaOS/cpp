@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS Devel cpp */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -242,6 +242,8 @@ static int _cpp_token_set(CppParser * cp, Token * token, TokenCode code,
 		string = " ";
 	if(cp->queue_string == NULL)
 	{
+		/* left-trim spaces */
+		for(; isspace((unsigned char)string[0]); string++);
 		if((cp->queue_string = string_new(string)) == NULL)
 			return -1;
 	}
@@ -452,7 +454,7 @@ static int _cpp_callback_newline(Parser * parser, Token * token, int c,
 static int _cpp_callback_otherspace(Parser * parser, Token * token, int c,
 		void * data)
 {
-	CppParser * cppparser = data;
+	CppParser * cp = data;
 	char * str = NULL;
 	size_t len = 0;
 	char * p;
@@ -472,15 +474,14 @@ static int _cpp_callback_otherspace(Parser * parser, Token * token, int c,
 		str[len++] = c;
 	}
 	while(isspace((c = parser_scan_filter(parser))) && c != '\n');
-	token_set_code(token, CPP_CODE_WHITESPACE);
 	if(str != NULL)
 	{
 		str[len] = '\0';
-		token_set_string(token, str);
+		_cpp_token_set(cp, token, CPP_CODE_WHITESPACE, str);
 		free(str);
 	}
 	else
-		token_set_string(token, " ");
+		_cpp_token_set(cp, token, CPP_CODE_WHITESPACE, " ");
 	return 0;
 }
 
@@ -943,7 +944,7 @@ static char * _include_path(CppParser * cpp, char const * str)
 	char * p;
 
 #ifdef DEBUG
-	fprintf(stderr, "DEBUG: %s(%p, \"%s\")\n", __func__, cpp, str);
+	fprintf(stderr, "DEBUG: %s(%p, \"%s\")\n", __func__, (void *)cpp, str);
 #endif
 	if(str[0] == '"')
 		d = str[0];
@@ -998,7 +999,7 @@ static char * _path_lookup(CppParser * cp, char const * path, int system)
 		}
 		string_delete(p);
 #ifdef DEBUG
-		fprintf(stderr, "DEBUG: stat(\"%s\", %p)\n", r, &st);
+		fprintf(stderr, "DEBUG: stat(\"%s\", %p)\n", r, (void *)&st);
 #endif
 		if(stat(r, &st) == 0)
 			return r;
@@ -1025,8 +1026,8 @@ int cppparser_inject(CppParser * cp, char const * string)
 		return 1;
 	cp->inject_first = 1;
 #ifdef DEBUG
-	fprintf(stderr, "DEBUG: %s(%p, \"%s\") => \"%s\"\n", __func__, cp,
-			string, cp->inject);
+	fprintf(stderr, "DEBUG: %s(%p, \"%s\") => \"%s\"\n", __func__,
+			(void *)cp, string, cp->inject);
 #endif
 	return 0;
 }
