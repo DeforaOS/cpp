@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2007-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2007-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS Devel cpp */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,6 @@
 #include <string.h>
 #include <errno.h>
 #include "CPP.h"
-#include "../config.h"
 
 
 /* cpp */
@@ -144,7 +143,7 @@ static void _do_print_token(FILE * fp, Token * token)
 /* cpp_error */
 static int _cpp_error(void)
 {
-	return error_print(PACKAGE);
+	return error_print("cpp");
 }
 
 
@@ -152,7 +151,7 @@ static int _cpp_error(void)
 /* FIXME -E prints metadata? */
 static int _usage(void)
 {
-	fputs("Usage: " PACKAGE " [-D name[=value]]...[-I directory][-o file][-t][-U name]... input...\n"
+	fputs("Usage: cpp [-D name[=value]]...[-I directory][-o file][-t][-U name]... input...\n"
 "  -D	Add a substitution\n"
 "  -I	Add a directory to the search path\n"
 "  -o	Write output to a file\n"
@@ -219,7 +218,7 @@ static int _main_add_define(Prefs * prefs, char * define)
 	value = strtok(define, "=");
 	if((p = realloc(prefs->defines, sizeof(*p) * (prefs->defines_cnt + 1)))
 			== NULL)
-		return error_set_print(PACKAGE, 1, "%s", strerror(errno));
+		return error_set_print("cpp", 1, "%s", strerror(errno));
 	prefs->defines = p;
 	prefs->defines[prefs->defines_cnt++] = define;
 	return 0;
@@ -231,7 +230,7 @@ static int _main_add_path(Prefs * prefs, char const * path)
 
 	if((p = realloc(prefs->paths, sizeof(*p) * (prefs->paths_cnt + 1)))
 			== NULL)
-		return error_set_print(PACKAGE, 1, "%s", strerror(errno));
+		return error_set_print("cpp", 1, "%s", strerror(errno));
 	prefs->paths = p;
 	prefs->paths[prefs->paths_cnt++] = path;
 	return 0;
@@ -245,7 +244,7 @@ static int _main_add_undefine(Prefs * prefs, char const * undefine)
 		return 1;
 	if((p = realloc(prefs->undefines, sizeof(*p)
 					* (prefs->undefines_cnt + 1))) == NULL)
-		return error_set_print(PACKAGE, 1, "%s", strerror(errno));
+		return error_set_print("cpp", 1, "%s", strerror(errno));
 	prefs->undefines = p;
 	prefs->undefines[prefs->undefines_cnt++] = undefine;
 	return 0;

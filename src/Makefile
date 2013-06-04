@@ -51,7 +51,7 @@ parser.o: parser.c parser.h ../include/CPP.h
 scanner.o: scanner.c common.h ../include/CPP.h
 	$(CC) $(libcpp_CFLAGS) -c scanner.c
 
-main.o: main.c ../include/CPP.h ../config.h
+main.o: main.c ../include/CPP.h
 	$(CC) $(cpp_CFLAGS) -c main.c
 
 clean:
