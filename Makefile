@@ -1,6 +1,6 @@
 PACKAGE	= CPP
 VERSION	= 0.0.1
-SUBDIRS	= data doc include src
+SUBDIRS	= data doc include src tests
 RM	= rm -f
 LN	= ln -f
 TAR	= tar -czvf
@@ -46,6 +46,10 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/common.h \
 		$(PACKAGE)-$(VERSION)/src/parser.h \
 		$(PACKAGE)-$(VERSION)/src/project.conf \
+		$(PACKAGE)-$(VERSION)/tests/if.cpp \
+		$(PACKAGE)-$(VERSION)/tests/Makefile \
+		$(PACKAGE)-$(VERSION)/tests/cpp.sh \
+		$(PACKAGE)-$(VERSION)/tests/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/COPYING \
 		$(PACKAGE)-$(VERSION)/config.h \
