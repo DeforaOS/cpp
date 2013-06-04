@@ -1,5 +1,5 @@
 /* $Id$ */
-/* Copyright (c) 2008-2012 Pierre Pronchery <khorben@defora.org> */
+/* Copyright (c) 2008-2013 Pierre Pronchery <khorben@defora.org> */
 /* This file is part of DeforaOS Devel cpp */
 /* This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
@@ -112,6 +112,7 @@ static void _scan_meta_line(Token * token);
 static int _scan_ifdef(Cpp * cpp, Token ** token);
 static int _scan_ifndef(Cpp * cpp, Token ** token);
 static int _scan_if(Cpp * cpp, Token ** token);
+static CppScope _if_do(Cpp * cpp, char const * str, int level);
 static int _scan_elif(Cpp * cpp, Token ** token);
 static int _scan_else(Cpp * cpp, Token ** token);
 static int _scan_endif(Cpp * cpp, Token ** token);
@@ -221,30 +222,29 @@ static int _scan_ifndef(Cpp * cpp, Token ** token)
 	return 0;
 }
 
-static CppScope _if_do(Cpp * cpp, char const * str);
 static int _scan_if(Cpp * cpp, Token ** token)
 {
 	char * str;
 
 	DEBUG_SCOPE();
 	str = token_get_data(*token);
-	_cpp_scope_push(cpp, _if_do(cpp, str));
+	_cpp_scope_push(cpp, _if_do(cpp, str, 0));
 	token_set_data(*token, NULL);
 	free(str);
 	return 0;
 }
 
-static CppScope _if_do(Cpp * cpp, char const * str)
+static CppScope _if_do(Cpp * cpp, char const * str, int level)
 {
 	char * p;
 	char const * q;
 	long l;
 
-	if(str == NULL)
+	if(str == NULL || level >= 10)
 		/* FIXME it's probably an error case instead */
 		return CPP_SCOPE_NOTYET;
 	if(str[0] == '!')
-		return (_if_do(cpp, &str[1]) == CPP_SCOPE_TAKING)
+		return (_if_do(cpp, &str[1], level) == CPP_SCOPE_TAKING)
 			? CPP_SCOPE_NOTYET : CPP_SCOPE_TAKING;
 	l = strtol(str, &p, 0);
 	if(str[0] != '\0' && p != str)
@@ -255,8 +255,8 @@ static CppScope _if_do(Cpp * cpp, char const * str)
 		return (cpp_define_get(cpp, &str[8]) != NULL)
 			? CPP_SCOPE_TAKING : CPP_SCOPE_NOTYET;
 	}
-	else if((q = cpp_define_get(cpp, str)) != NULL && strcmp(q, "1") == 0)
-		return CPP_SCOPE_TAKING;
+	else if((q = cpp_define_get(cpp, str)) != NULL)
+		return _if_do(cpp, q, level + 1);
 	/* FIXME really check the condition */
 	return CPP_SCOPE_NOTYET;
 }
@@ -282,7 +282,7 @@ static int _scan_elif(Cpp * cpp, Token ** token)
 		if(scope == CPP_SCOPE_TAKING)
 			_cpp_scope_set(cpp, CPP_SCOPE_TAKEN);
 		else if(scope == CPP_SCOPE_NOTYET)
-			_cpp_scope_set(cpp, _if_do(cpp, str));
+			_cpp_scope_set(cpp, _if_do(cpp, str, 0));
 	}
 	if(str != NULL)
 	{
