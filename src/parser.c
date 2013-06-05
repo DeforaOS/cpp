@@ -637,8 +637,11 @@ static int _cpp_callback_header(Parser * parser, Token * token, int c,
 	str[len] = '\0';
 	token_set_code(token, CPP_CODE_META_DATA);
 	token_set_string(token, str);
-	if(cp->queue_string == NULL)
+	if(cp->queue_string == NULL || strlen(cp->queue_string) == 0)
+	{
+		free(cp->queue_string);
 		cp->queue_string = str;
+	}
 	else
 	{
 		free(str);
