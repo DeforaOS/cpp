@@ -48,8 +48,10 @@ dist:
 		$(PACKAGE)-$(VERSION)/src/project.conf \
 		$(PACKAGE)-$(VERSION)/tests/define.cpp \
 		$(PACKAGE)-$(VERSION)/tests/if.cpp \
+		$(PACKAGE)-$(VERSION)/tests/include.cpp \
 		$(PACKAGE)-$(VERSION)/tests/Makefile \
 		$(PACKAGE)-$(VERSION)/tests/cpp.sh \
+		$(PACKAGE)-$(VERSION)/tests/include-define.cpp \
 		$(PACKAGE)-$(VERSION)/tests/project.conf \
 		$(PACKAGE)-$(VERSION)/Makefile \
 		$(PACKAGE)-$(VERSION)/COPYING \
