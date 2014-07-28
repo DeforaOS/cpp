@@ -987,6 +987,7 @@ static char * _path_lookup(CppParser * cp, char const * path, int system)
 
 	if(system != 0)
 		return cpp_path_lookup(cp->cpp, path);
+	for(; cp->subparser != NULL; cp = cp->subparser);
 	for(; cp != NULL; cp = cp->parent)
 	{
 		filename = parser_get_filename(cp->parser);
