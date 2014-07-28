@@ -202,9 +202,9 @@ int cpp_path_add(Cpp * cpp, char const * path)
 
 
 /* cpp_path_lookup */
-static char * _lookup_error(char const * path);
+static char * _lookup_error(char const * path, int system);
 
-String * cpp_path_lookup(Cpp * cpp, char const * filename)
+String * cpp_path_lookup(Cpp * cpp, char const * filename, int system)
 {
 	size_t len = strlen(filename);
 	size_t i;
@@ -231,12 +231,15 @@ String * cpp_path_lookup(Cpp * cpp, char const * filename)
 			break;
 	}
 	free(buf);
-	return _lookup_error(filename);
+	return _lookup_error(filename, system);
 }
 
-static char * _lookup_error(char const * filename)
+static char * _lookup_error(char const * filename, int system)
 {
-	error_set("%s%s%s%s", "Cannot include <", filename, ">: ",
-			strerror(errno));
+	char lquote = system ? '<' : '"';
+	char rquote = system ? '>' : '"';
+
+	error_set("%s%c%s%c%s%s", "Cannot include ", lquote, filename, rquote,
+			": ", strerror(errno));
 	return NULL;
 }

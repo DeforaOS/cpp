@@ -939,20 +939,22 @@ int cppparser_include(CppParser * cp, char const * include)
 	return (cp->subparser != NULL) ? 0 : -1;
 }
 
-static char * _include_path(CppParser * cpp, char const * str)
+static char * _include_path(CppParser * cp, char const * str)
 {
+	int system;
 	int d;
 	size_t i;
 	char * path = NULL;
 	char * p;
 
 #ifdef DEBUG
-	fprintf(stderr, "DEBUG: %s(%p, \"%s\")\n", __func__, (void *)cpp, str);
+	fprintf(stderr, "DEBUG: %s(%p, \"%s\")\n", __func__, (void *)cp, str);
 #endif
-	if(str[0] == '"')
-		d = str[0];
-	else if(str[0] == '<')
+	system = (str[0] == '<') ? 1 : ((str[0] == '"') ? 0 : -1);
+	if(system == 1)
 		d = '>';
+	else if(system == 0)
+		d = '"';
 	else
 	{
 		error_set("%s", "Invalid include directive");
@@ -971,7 +973,7 @@ static char * _include_path(CppParser * cpp, char const * str)
 		return NULL;
 	}
 	path[i - 1] = '\0';
-	p = _path_lookup(cpp, path, d == '>');
+	p = _path_lookup(cp, path, system);
 	free(path);
 	return p;
 }
@@ -986,7 +988,7 @@ static char * _path_lookup(CppParser * cp, char const * path, int system)
 	struct stat st;
 
 	if(system != 0)
-		return cpp_path_lookup(cp->cpp, path);
+		return cpp_path_lookup(cpp, path, 1);
 	for(; cp->subparser != NULL; cp = cp->subparser);
 	for(; cp != NULL; cp = cp->parent)
 	{
@@ -994,14 +996,10 @@ static char * _path_lookup(CppParser * cp, char const * path, int system)
 		if((p = string_new(filename)) == NULL)
 			return NULL;
 		q = dirname(p);
-		if((r = string_new(q)) == NULL || string_append(&r, "/") != 0
-				|| string_append(&r, path) != 0)
-		{
-			string_delete(r);
-			string_delete(p);
-			return NULL;
-		}
+		r = string_new_append(q, "/", path, NULL);
 		string_delete(p);
+		if(r == NULL)
+			return NULL;
 #ifdef DEBUG
 		fprintf(stderr, "DEBUG: stat(\"%s\", %p)\n", r, (void *)&st);
 #endif
@@ -1010,7 +1008,7 @@ static char * _path_lookup(CppParser * cp, char const * path, int system)
 		error_set("%s: %s", r, strerror(errno));
 		string_delete(r);
 	}
-	return cpp_path_lookup(cpp, path); /* XXX errors change "" into <> */
+	return cpp_path_lookup(cpp, path, 0);
 }
 
 

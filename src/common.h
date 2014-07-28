@@ -49,6 +49,6 @@ struct _Cpp
 
 
 /* functions */
-char * cpp_path_lookup(Cpp * cpp, char const * filename);
+char * cpp_path_lookup(Cpp * cpp, char const * filename, int system);
 
 #endif /* !_CPP_COMMON_H */
