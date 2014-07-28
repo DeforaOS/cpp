@@ -223,7 +223,7 @@ String * cpp_path_lookup(Cpp * cpp, char const * filename, int system)
 		buf = p;
 		sprintf(buf, "%s/%s", cpp->paths[i], filename);
 #ifdef DEBUG
-		fprintf(stderr, "DEBUG: stat(\"%s\", %p)\n", buf, &st);
+		fprintf(stderr, "DEBUG: stat(\"%s\", %p)\n", buf, (void *)&st);
 #endif
 		if(stat(buf, &st) == 0)
 			return buf;
