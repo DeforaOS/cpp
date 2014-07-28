@@ -1,6 +1,6 @@
 #include "include-define.cpp"
 #ifdef GOOD
-#warning good
+#warning PASS
 #else
-#error error
+#error FAIL
 #endif

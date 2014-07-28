@@ -1,31 +1,31 @@
 #if 0
-#warning good
+#warning PASS
 #endif
 
 #if 1
-#warning good
+#warning PASS
 #else
 
 #define GOOD 1
 #if GOOD
-#warning good
+#warning PASS
 #else
 #undef GOOD
 
 #define GOOD 0
 #if !GOOD
-#warning good
+#warning PASS
 #else
 #undef GOOD
 
 #define GOOD 1
 #if 0
-#warning good
+#warning PASS
 #endif
 #undef GOOD
 
 #define GOOD 0
 #if 0
-#warning good
+#warning PASS
 #endif
 #undef GOOD

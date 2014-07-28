@@ -1,43 +1,43 @@
 #if 0
-#error error
+#error FAIL
 #else
-#warning good
+#warning PASS
 #endif
 
 #if 1
-#warning good
+#warning PASS
 #else
-#error error
+#error FAIL
 #endif
 
 #define GOOD 1
 #if GOOD
-#warning good
+#warning PASS
 #else
-#error error
+#error FAIL
 #endif
 #undef GOOD
 
 #define GOOD 0
 #if !GOOD
-#warning good
+#warning PASS
 #else
-#error error
+#error FAIL
 #endif
 #undef GOOD
 
 #define GOOD 1
 #if 0
-#error error
+#error FAIL
 #elif GOOD
-#warning good
+#warning PASS
 #endif
 #undef GOOD
 
 #define GOOD 0
 #if 0
-#error error
+#error FAIL
 #elif !GOOD
-#warning good
+#warning PASS
 #endif
 #undef GOOD

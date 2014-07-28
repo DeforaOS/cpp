@@ -1,25 +1,25 @@
 #ifdef GOOD
-#error error
+#error FAIL
 #endif
 
 #define GOOD 1
 
 #ifdef GOOD
-#warning good
+#warning PASS
 #else
-#error error
+#error FAIL
 #endif
 
 #ifndef GOOD
-#error error
+#error FAIL
 #else
-#warning good
+#warning PASS
 #endif
 
 #undef GOOD
 
 #ifndef GOOD
-#warning good
+#warning PASS
 #else
-#error error
+#error FAIL
 #endif
