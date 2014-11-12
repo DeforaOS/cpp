@@ -65,7 +65,7 @@ if [ $# -eq 1 -a -n "$output" ]; then
 	target="$1"
 
 	LD_LIBRARY_PATH="../src" $CPP "$target" > "$output"
-elif [ $# -gt 1 -a -z "$output" ]; then
+elif [ $# -ge 1 -a -z "$output" ]; then
 	while [ $# -gt 0 ]; do
 		target="$1"
 		output="${target%.cpp}.o"
