@@ -24,11 +24,17 @@
 
 
 
+#variables
+PROGNAME="cpp.sh"
+#executables
+CPP="../src/cpp"
+
+
 #functions
 #usage
 _usage()
 {
-	echo "Usage: cpp.sh [-c] file..." 1>&2
+	echo "Usage: $PROGNAME [-c] file..." 1>&2
 	return 1
 }
 
@@ -55,5 +61,5 @@ while [ $# -gt 0 ]; do
 	output="${target%.cpp}.o"
 	shift
 
-	LD_LIBRARY_PATH="../src" ../src/cpp "$target" > "$output"
+	LD_LIBRARY_PATH="../src" $CPP "$target" > "$output"
 done
