@@ -28,21 +28,26 @@
 PROGNAME="cpp.sh"
 #executables
 CPP="../src/cpp"
+[ -n "$OBJDIR" ] && CPP="${OBJDIR}cpp"
 
 
 #functions
 #usage
 _usage()
 {
-	echo "Usage: $PROGNAME [-c] file..." 1>&2
+	echo "Usage: $PROGNAME [-c][-o target] file..." 1>&2
 	return 1
 }
 
 
 #main
-while getopts "c" name; do
+output=
+while getopts "co:" name; do
 	case $name in
 		c)
+			;;
+		o)
+			output="$OPTARG"
 			;;
 		?)
 			_usage

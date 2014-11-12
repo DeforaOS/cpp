@@ -1,4 +1,5 @@
-TARGETS	= cpp.pc
+TARGETS	= $(OBJDIR)cpp.pc
+OBJDIR	=
 PREFIX	= /usr/local
 DESTDIR	=
 RM	= rm -f
@@ -9,8 +10,8 @@ INSTALL	= install
 
 all: $(TARGETS)
 
-cpp.pc: cpp.pc.in ../config.sh
-	./pkgconfig.sh -P "$(PREFIX)" -- "cpp.pc"
+$(OBJDIR)cpp.pc: cpp.pc.in ../config.sh
+	./pkgconfig.sh -P "$(PREFIX)" -- "$(OBJDIR)cpp.pc"
 
 clean:
 	$(RM) -- $(cpp.pc_OBJS)
@@ -20,7 +21,7 @@ distclean: clean
 	$(RM) -- $(TARGETS)
 
 install: $(TARGETS)
-	./pkgconfig.sh -P "$(DESTDIR)$(PREFIX)" -i -- "cpp.pc"
+	./pkgconfig.sh -P "$(DESTDIR)$(PREFIX)" -i -- "$(OBJDIR)cpp.pc"
 
 uninstall:
 	./pkgconfig.sh -P "$(DESTDIR)$(PREFIX)" -u -- "cpp.pc"

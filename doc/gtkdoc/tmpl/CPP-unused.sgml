@@ -1,0 +1,28 @@
+<!-- ##### SECTION tmpl/cpp.sgml:Image ##### -->
+
+
+
+<!-- ##### SECTION tmpl/cpp.sgml:Long_Description ##### -->
+<para>
+DeforaOS code pre-processing library.
+</para>
+
+
+<!-- ##### SECTION tmpl/cpp.sgml:See_Also ##### -->
+<para>
+DeforaOS Development Assembler (Asm), DeforaOS Development C99 C compiler (C99)
+</para>
+
+
+<!-- ##### SECTION tmpl/cpp.sgml:Short_Description ##### -->
+DeforaOS Development Code Pre-Processor
+
+
+<!-- ##### SECTION tmpl/cpp.sgml:Stability_Level ##### -->
+
+
+
+<!-- ##### SECTION tmpl/cpp.sgml:Title ##### -->
+CPP
+
+
