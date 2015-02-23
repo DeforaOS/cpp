@@ -28,7 +28,7 @@
 PROGNAME="cpp.sh"
 #executables
 CPP="../src/cpp"
-[ -n "$OBJDIR" ] && CPP="${OBJDIR}cpp"
+[ -n "$OBJDIR" ] && CPP="${OBJDIR}../src/cpp"
 
 
 #functions
