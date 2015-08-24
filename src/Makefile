@@ -31,9 +31,13 @@ $(OBJDIR)libcpp.a: $(libcpp_OBJS)
 	$(AR) -rc $(OBJDIR)libcpp.a $(libcpp_OBJS)
 	$(RANLIB) $(OBJDIR)libcpp.a
 
-$(OBJDIR)libcpp.so.0.0 $(OBJDIR)libcpp.so.0 $(OBJDIR)libcpp.so: $(libcpp_OBJS)
+$(OBJDIR)libcpp.so.0.0: $(libcpp_OBJS)
 	$(CCSHARED) -o $(OBJDIR)libcpp.so.0.0 -Wl,-soname,libcpp.so.0 $(libcpp_OBJS) $(libcpp_LDFLAGS)
+
+$(OBJDIR)libcpp.so.0: $(OBJDIR)libcpp.so.0.0
 	$(LN) -s -- libcpp.so.0.0 $(OBJDIR)libcpp.so.0
+
+$(OBJDIR)libcpp.so: $(OBJDIR)libcpp.so.0.0
 	$(LN) -s -- libcpp.so.0.0 $(OBJDIR)libcpp.so
 
 cpp_OBJS = $(OBJDIR)main.o
