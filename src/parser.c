@@ -901,6 +901,62 @@ CppParser * cppparser_new(Cpp * cpp, CppParser * parent, char const * filename,
 }
 
 
+/* cppparser_new_string */
+CppParser * cppparser_new_string(Cpp * cpp, CppParser * parent,
+		char const * string, int filters)
+{
+	/* FIXME refactor */
+	CppParser * cp;
+
+	if((cp = object_new(sizeof(*cp))) == NULL)
+		return NULL;
+	cp->cpp = cpp;
+	cp->parent = parent;
+	cp->parser = parser_new_string(string, strlen(string));
+	cp->filters = filters;
+	cp->inject = NULL;
+	cp->inject_first = 0;
+	cp->newlines_last = 0;
+	cp->newlines_last_cnt = 0;
+	cp->trigraphs_last = 0;
+	cp->trigraphs_last_cnt = 0;
+	cp->directive_newline = 1;
+	cp->directive_control = 0;
+	cp->queue_ready = 0;
+	cp->queue_code = CPP_CODE_NULL;
+	cp->queue_string = NULL;
+	cp->subparser = NULL;
+	if(cp->parser == NULL)
+	{
+		cppparser_delete(cp);
+		return NULL;
+	}
+	parser_add_filter(cp->parser, _cpp_filter_inject, cp);
+	parser_add_filter(cp->parser, _cpp_filter_newlines, cp);
+	if(cp->filters & CPP_FILTER_TRIGRAPH)
+		parser_add_filter(cp->parser, _cpp_filter_trigraphs, cp);
+	parser_add_callback(cp->parser, _cpp_callback_inject, cp);
+	parser_add_callback(cp->parser, _cpp_callback_dequeue, cp);
+	if(cp->filters & CPP_FILTER_WHITESPACE)
+		parser_add_callback(cp->parser, _cpp_callback_whitespace, cp);
+	else
+	{
+		parser_add_callback(cp->parser, _cpp_callback_newline, cp);
+		parser_add_callback(cp->parser, _cpp_callback_otherspace, cp);
+	}
+	parser_add_callback(cp->parser, _cpp_callback_comment, cp);
+	parser_add_callback(cp->parser, _cpp_callback_header, cp);
+	parser_add_callback(cp->parser, _cpp_callback_control, cp);
+	parser_add_callback(cp->parser, _cpp_callback_comma, cp);
+	parser_add_callback(cp->parser, _cpp_callback_operator, cp);
+	parser_add_callback(cp->parser, _cpp_callback_quote, cp);
+	parser_add_callback(cp->parser, _cpp_callback_directive, cp);
+	parser_add_callback(cp->parser, _cpp_callback_word, cp);
+	parser_add_callback(cp->parser, _cpp_callback_unknown, cp);
+	return cp;
+}
+
+
 /* cppparser_delete */
 void cppparser_delete(CppParser * cp)
 {

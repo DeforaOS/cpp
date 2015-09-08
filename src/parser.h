@@ -28,6 +28,8 @@ typedef struct _CppParser CppParser;
 /* functions */
 CppParser * cppparser_new(Cpp * cpp, CppParser * parent, char const * filename,
 		int filters);
+CppParser * cppparser_new_string(Cpp * cpp, CppParser * parent,
+		char const * string, int filters);
 void cppparser_delete(CppParser * cppparser);
 
 

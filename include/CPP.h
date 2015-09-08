@@ -126,6 +126,7 @@ typedef enum _CppCode
 
 /* functions */
 Cpp * cpp_new(CppPrefs * prefs);
+Cpp * cpp_new_string(CppPrefs * prefs, char const * string);
 void cpp_delete(Cpp * cpp);
 
 /* accessors */

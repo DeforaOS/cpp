@@ -72,6 +72,43 @@ Cpp * cpp_new(CppPrefs * prefs)
 }
 
 
+/* cpp_new_string */
+Cpp * cpp_new_string(CppPrefs * prefs, char const * string)
+{
+	/* FIXME really implement (and refactor) */
+	Cpp * cpp;
+	String * p;
+	int r = 0;
+
+#ifdef DEBUG
+	fprintf(stderr, "DEBUG: %s()\n", __func__);
+#endif
+	if((cpp = object_new(sizeof(*cpp))) == NULL)
+		return NULL;
+	memset(cpp, 0, sizeof(*cpp));
+	cpp->options = prefs->options;
+	cpp->parser = cppparser_new_string(cpp, NULL, string, prefs->filters);
+	if((p = string_new(prefs->filename)) != NULL)
+	{
+		r |= cpp_path_add(cpp, dirname(p)); /* FIXME inclusion order */
+		string_delete(p);
+	}
+	if((p = getcwd(NULL, 0)) != NULL)
+	{
+		r |= cpp_path_add(cpp, p);
+		free(p);
+	}
+	else
+		error_set("%s%s", "getcwd: ", strerror(errno));
+	if(r != 0 || cpp->parser == NULL || cpp->paths_cnt != 2)
+	{
+		cpp_delete(cpp);
+		return NULL;
+	}
+	return cpp;
+}
+
+
 /* cpp_delete */
 void cpp_delete(Cpp * cpp)
 {
