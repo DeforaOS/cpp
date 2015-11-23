@@ -362,7 +362,7 @@ static int _scan_define(Cpp * cpp, Token * token)
 	if(cpp_define_add(cpp, var, val) != 0)
 	{
 		token_set_code(token, CPP_CODE_META_ERROR);
-		token_set_string(token, error_get());
+		token_set_string(token, error_get(NULL));
 	}
 	free(var);
 	token_set_data(token, NULL);
@@ -375,7 +375,7 @@ static int _scan_include(Cpp * cpp, Token * token)
 	if(cppparser_include(cpp->parser, token_get_data(token)) == 0)
 		return 0;
 	token_set_code(token, CPP_CODE_META_ERROR);
-	token_set_string(token, error_get());
+	token_set_string(token, error_get(NULL));
 	return 0;
 }
 
@@ -401,7 +401,7 @@ static int _scan_undef(Cpp * cpp, Token * token)
 	if(cpp_define_remove(cpp, var) != 0)
 	{
 		token_set_code(token, CPP_CODE_META_ERROR);
-		token_set_string(token, error_get());
+		token_set_string(token, error_get(NULL));
 	}
 	free(var);
 	free(str);
