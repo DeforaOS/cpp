@@ -75,7 +75,7 @@ Cpp * cpp_new(CppPrefs * prefs)
 /* cpp_new_string */
 Cpp * cpp_new_string(CppPrefs * prefs, char const * string)
 {
-	/* FIXME really implement (and refactor) */
+	/* FIXME really implement */
 	Cpp * cpp;
 	String * p;
 	int r = 0;

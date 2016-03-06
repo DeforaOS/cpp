@@ -850,6 +850,7 @@ static int _cpp_callback_unknown(Parser * parser, Token * token, int c,
 CppParser * cppparser_new(Cpp * cpp, CppParser * parent, char const * filename,
 		int filters)
 {
+	/* FIXME factor code */
 	CppParser * cp;
 
 	if((cp = object_new(sizeof(*cp))) == NULL)
@@ -905,7 +906,6 @@ CppParser * cppparser_new(Cpp * cpp, CppParser * parent, char const * filename,
 CppParser * cppparser_new_string(Cpp * cpp, CppParser * parent,
 		char const * string, int filters)
 {
-	/* FIXME refactor */
 	CppParser * cp;
 
 	if((cp = object_new(sizeof(*cp))) == NULL)
