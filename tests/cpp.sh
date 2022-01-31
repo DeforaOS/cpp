@@ -27,8 +27,7 @@
 #variables
 PROGNAME="cpp.sh"
 #executables
-CPP="../src/cpp"
-[ -n "$OBJDIR" ] && CPP="${OBJDIR}../src/cpp"
+CPP="$OBJDIR../src/cpp"
 
 
 #functions
@@ -64,14 +63,14 @@ fi
 if [ $# -eq 1 -a -n "$output" ]; then
 	target="$1"
 
-	LD_LIBRARY_PATH="../src" $CPP "$target" > "$output"
+	LD_LIBRARY_PATH="$OBJDIR../src/lib" $CPP "$target" > "$output"
 elif [ $# -ge 1 -a -z "$output" ]; then
 	while [ $# -gt 0 ]; do
 		target="$1"
 		output="${target%.cpp}.o"
 		shift
 
-		LD_LIBRARY_PATH="../src" $CPP "$target" > "$output"
+		LD_LIBRARY_PATH="$OBJDIR../src/lib" $CPP "$target" > "$output"
 	done
 else
 	_usage
