@@ -14,6 +14,7 @@ cpp_define_remove
 cpp_delete
 cpp_get_filename
 cpp_new
+cpp_new_string
 cpp_path_add
 cpp_scan
 </SECTION>
